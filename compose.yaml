@@ -1,0 +1,21 @@
+name: cloudops-servicehub
+
+services:
+  servicehub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cloudops-servicehub:local
+    restart: unless-stopped
+    expose:
+      - "8080"
+
+  nginx:
+    image: nginx:1.30.4-alpine
+    restart: unless-stopped
+    depends_on:
+      - servicehub
+    ports:
+      - "${NGINX_HOST_PORT:-8081}:80"
+    volumes:
+      - ./deploy/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
