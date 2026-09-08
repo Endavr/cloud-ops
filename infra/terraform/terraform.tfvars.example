@@ -1,0 +1,11 @@
+# Defaults target the cost-conscious development environment in Singapore.
+aws_region       = "ap-southeast-1"
+project_name     = "cloudops-servicehub"
+environment      = "dev"
+instance_type    = "t4g.small"
+root_volume_size = 10
+
+# Session Manager is the default administration path. To enable emergency SSH,
+# set both values and restrict ssh_allowed_cidr to your current public IPv4 /32.
+# ssh_allowed_cidr = "203.0.113.10/32"
+# key_name         = "existing-ec2-key-pair"
