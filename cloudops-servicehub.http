@@ -1,6 +1,0 @@
-@cloudops_servicehub_HostAddress = http://localhost:5221
-
-GET {{cloudops_servicehub_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
