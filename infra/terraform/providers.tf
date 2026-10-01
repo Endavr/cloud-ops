@@ -1,5 +1,6 @@
 provider "aws" {
-  region = var.aws_region
+  region              = var.aws_region
+  allowed_account_ids = ["912281739191"]
 
   default_tags {
     tags = merge(

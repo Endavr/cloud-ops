@@ -36,6 +36,8 @@ resource "aws_instance" "servicehub" {
   vpc_security_group_ids      = [aws_security_group.servicehub.id]
   iam_instance_profile        = aws_iam_instance_profile.ec2.name
   key_name                    = var.key_name
+  user_data                   = file("${path.module}/bootstrap.sh")
+  user_data_replace_on_change = true
 
   metadata_options {
     http_endpoint               = "enabled"

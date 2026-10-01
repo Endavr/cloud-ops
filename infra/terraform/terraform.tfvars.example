@@ -2,8 +2,11 @@
 aws_region       = "ap-southeast-1"
 project_name     = "cloudops-servicehub"
 environment      = "dev"
-instance_type    = "t4g.small"
+instance_type    = "t4g.micro"
 root_volume_size = 10
+
+# Enable only after NGINX has an HTTPS listener and a certificate is configured.
+enable_https_ingress = false
 
 # Session Manager is the default administration path. To enable emergency SSH,
 # set both values and restrict ssh_allowed_cidr to your current public IPv4 /32.

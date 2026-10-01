@@ -20,5 +20,10 @@ output "ecr_repository_url" {
 
 output "session_manager_command" {
   description = "AWS CLI command for starting an SSM Session Manager shell."
-  value       = "aws ssm start-session --target ${aws_instance.servicehub.id} --region ${var.aws_region}"
+  value       = "aws ssm start-session --target ${aws_instance.servicehub.id} --region ${var.aws_region} --profile cloudops-free"
+}
+
+output "bootstrap_sha256" {
+  description = "SHA-256 digest of the EC2 bootstrap script applied as instance user data."
+  value       = filesha256("${path.module}/bootstrap.sh")
 }

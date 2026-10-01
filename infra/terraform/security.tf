@@ -18,6 +18,8 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "https" {
+  count = var.enable_https_ingress ? 1 : 0
+
   security_group_id = aws_security_group.servicehub.id
   description       = "Public HTTPS to NGINX"
   cidr_ipv4         = "0.0.0.0/0"
