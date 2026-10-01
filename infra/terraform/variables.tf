@@ -56,7 +56,13 @@ variable "key_name" {
 variable "instance_type" {
   description = "ARM64 EC2 instance type for the ServiceHub host."
   type        = string
-  default     = "t4g.small"
+  default     = "t4g.micro"
+}
+
+variable "enable_https_ingress" {
+  description = "Whether to allow public HTTPS traffic. Keep false until an HTTPS listener and certificate are configured."
+  type        = bool
+  default     = false
 }
 
 variable "root_volume_size" {
