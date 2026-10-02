@@ -1,0 +1,52 @@
+name: cloudops-servicehub
+
+services:
+  servicehub:
+    image: ${SERVICEHUB_IMAGE:?SERVICEHUB_IMAGE must be set to an immutable ECR image URI tagged with a Git commit SHA}
+    restart: unless-stopped
+    cpus: 0.50
+    mem_limit: 256m
+    pids_limit: 100
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      ForwardedHeaders__KnownNetworks__0: 172.29.0.0/24
+    expose:
+      - "8080"
+    networks:
+      - servicehub-network
+
+  nginx:
+    image: nginx:1.30.4-alpine
+    restart: unless-stopped
+    cpus: 0.25
+    mem_limit: 64m
+    pids_limit: 50
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - servicehub
+    ports:
+      - "${NGINX_HOST_PORT:-80}:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://127.0.0.1/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - servicehub-network
+
+networks:
+  servicehub-network:
+    ipam:
+      config:
+        - subnet: 172.29.0.0/24
